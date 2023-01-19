@@ -11,6 +11,7 @@ class AuthButton extends StatelessWidget {
     required this.icon,
   });
   //  this는 이 메소드  (text) 가 포함된 object (AuthButton) 를 가리킨다.
+  //  https://velog.io/@zinukk/%EB%B0%94%EC%9D%B8%EB%94%A9
 
   @override
   Widget build(BuildContext context) {
