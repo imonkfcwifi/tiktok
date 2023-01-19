@@ -44,9 +44,9 @@ class SignUpScreen extends StatelessWidget {
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            children: [
+            children: const [
               Gaps.v80,
-              const Text(
+              Text(
                 "Sign up for TikTok",
                 style: TextStyle(
                   fontSize: Sizes.size24,
@@ -54,7 +54,7 @@ class SignUpScreen extends StatelessWidget {
                 ),
               ),
               Gaps.v20,
-              const Text(
+              Text(
                 "Create a profile, follow other accounts, make your own videos, and more.",
                 style: TextStyle(
                   fontSize: Sizes.size16,
@@ -63,20 +63,16 @@ class SignUpScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               Gaps.v40,
-              GestureDetector(
-                onTap: () => onEmailTap(context),
-                child: const AuthButton(
-                  icon: FaIcon(FontAwesomeIcons.solidUser),
-                  text: "Use Email & Password",
-                ),
+              AuthButton(
+                icon: FaIcon(FontAwesomeIcons.solidUser),
+                text: "Use Email & Password",
+                button: EmailScreen(),
               ),
               Gaps.v16,
-              GestureDetector(
-                onTap: () => onAppleTap(context),
-                child: const AuthButton(
-                  icon: FaIcon(FontAwesomeIcons.apple),
-                  text: "Continue with Apple",
-                ),
+              AuthButton(
+                icon: FaIcon(FontAwesomeIcons.apple),
+                text: "Continue with Apple",
+                button: AppleScreen(),
               ),
             ],
           ),
