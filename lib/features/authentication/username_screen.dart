@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/authentication/email_screen.dart';
+import 'package:tiktok_clone/features/authentication/widgets/form_button.dart';
 
 class UsernameScreen extends StatefulWidget {
   const UsernameScreen({super.key});
@@ -16,7 +18,6 @@ class _UsernameScreenState extends State<UsernameScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     _usernameController.addListener(() {
@@ -26,6 +27,24 @@ class _UsernameScreenState extends State<UsernameScreen> {
     });
   }
 
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _usernameController.dispose();
+    super.dispose();
+  }
+
+  void _onNextTap() {
+    if (_username.isEmpty) return;
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const EmailScreen(),
+      ),
+    );
+  }
+  // StatefulWidget의 state에 있어서 build context 안해도됨
+
+//  dispose : https://nomad-programmer.tistory.com/254
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,29 +94,12 @@ class _UsernameScreenState extends State<UsernameScreen> {
               cursorColor: Theme.of(context).primaryColor,
             ),
             Gaps.v16,
-            FractionallySizedBox(
-              widthFactor: 1,
-              child: AnimatedContainer(
-                padding: const EdgeInsets.symmetric(
-                  vertical: Sizes.size16,
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(Sizes.size5),
-                  color: _username.isEmpty
-                      ? Colors.grey.shade400
-                      : Theme.of(context).primaryColor,
-                ),
-                duration: const Duration(milliseconds: 250),
-                child: const Text(
-                  'Next',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
+            GestureDetector(
+              onTap: _onNextTap,
+              child: FormButton(
+                disabled: _username.isEmpty,
               ),
-            )
+            ),
           ],
         ),
       ),
