@@ -3,7 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/apple_screen.dart';
-import 'package:tiktok_clone/features/authentication/email_screen.dart';
+import 'package:tiktok_clone/features/authentication/username_screen.dart';
 
 import 'widgets/auth_button.dart';
 
@@ -46,7 +46,7 @@ class LoginScreen extends StatelessWidget {
               AuthButton(
                 icon: FaIcon(FontAwesomeIcons.solidUser),
                 text: "Use Email & Password",
-                button: EmailScreen(),
+                button: UsernameScreen(),
               ),
               Gaps.v16,
               AuthButton(
