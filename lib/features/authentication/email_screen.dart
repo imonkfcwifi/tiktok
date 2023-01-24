@@ -7,21 +7,21 @@ class EmailScreen extends StatefulWidget {
   const EmailScreen({super.key});
 
   @override
-  State<EmailScreen> createState() => _UsernameScreenState();
+  State<EmailScreen> createState() => _emailScreenState();
 }
 
-String _username = "";
+String _email = "";
 
-class _UsernameScreenState extends State<EmailScreen> {
-  final TextEditingController _usernameController = TextEditingController();
+class _emailScreenState extends State<EmailScreen> {
+  final TextEditingController _emailController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
 
-    _usernameController.addListener(() {
+    _emailController.addListener(() {
       setState(() {
-        _username = _usernameController.text;
+        _email = _emailController.text;
       });
     });
   }
@@ -29,7 +29,7 @@ class _UsernameScreenState extends State<EmailScreen> {
   @override
   void dispose() {
     // TODO: implement dispose
-    _usernameController.dispose();
+    _emailController.dispose();
     super.dispose();
   }
 
@@ -57,8 +57,9 @@ class _UsernameScreenState extends State<EmailScreen> {
             ),
             Gaps.v16,
             TextField(
-              controller: _usernameController,
+              controller: _emailController,
               decoration: InputDecoration(
+                errorText: "type the right email",
                 hintText: "Eamil",
                 enabledBorder: UnderlineInputBorder(
                   borderSide: BorderSide(
@@ -75,7 +76,7 @@ class _UsernameScreenState extends State<EmailScreen> {
             ),
             Gaps.v16,
             FormButton(
-              disabled: _username.isEmpty,
+              disabled: _email.isEmpty,
             ),
           ],
         ),
