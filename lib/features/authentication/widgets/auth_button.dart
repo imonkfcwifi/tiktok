@@ -5,26 +5,26 @@ import 'package:tiktok_clone/constants/sizes.dart';
 class AuthButton extends StatelessWidget {
   final String text;
   final FaIcon icon;
-  final Widget button;
+  final Widget? button;
   const AuthButton({
     super.key,
     required this.text,
     required this.icon,
-    required this.button,
+    this.button,
   });
   //  this는 이 메소드  (text) 가 포함된 object (AuthButton) 를 가리킨다.
   //  https://velog.io/@zinukk/%EB%B0%94%EC%9D%B8%EB%94%A9
 
   void buttonClick(BuildContext context) {
     Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => button,
+      builder: (context) => button!,
     ));
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => buttonClick(context),
+      onTap: () => button is Widget ? buttonClick(context) : null,
       child: FractionallySizedBox(
         widthFactor: 1,
         // widthFactor 1 = father 100%, 0.5 = father 50%
