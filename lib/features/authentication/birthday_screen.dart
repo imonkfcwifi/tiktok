@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/features/authentication/email_screen.dart';
+import 'package:tiktok_clone/features/authentication/dart.dart';
 import 'package:tiktok_clone/features/authentication/widgets/form_button.dart';
 
 class BirthdayScreen extends StatefulWidget {
@@ -14,8 +14,8 @@ class BirthdayScreen extends StatefulWidget {
 
 class BirthdayScreenState extends State<BirthdayScreen> {
   final TextEditingController _birthdayController = TextEditingController();
-  static int old = 12;
-  DateTime initialDate = DateTime.now().subtract(Duration(days: old * 365));
+  static int year = 12;
+  DateTime initialDate = DateTime.now().subtract(Duration(days: year * 365));
 
   @override
   void initState() {
@@ -33,7 +33,7 @@ class BirthdayScreenState extends State<BirthdayScreen> {
   void _onNextTap() {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => const EmailScreen(),
+        builder: (context) => const Dart(),
       ),
     );
   }
