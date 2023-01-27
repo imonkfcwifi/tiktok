@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/features/authentication/widgets/form_button.dart';
+import 'package:tiktok_clone/features/onboarding/interests_screen.dart';
 
 import '../../constants/sizes.dart';
 
@@ -21,6 +22,11 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
       if (_formKey.currentState!.validate()) {
         _formKey.currentState!.save();
         print(formdata);
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => const InterestScreen(),
+          ),
+        );
       }
     }
     // currnstate true === call validate
@@ -47,6 +53,9 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
                   hintText: 'Email',
                 ),
                 validator: (value) {
+                  if (value != null && value.isEmpty) {
+                    return 'Please write your email';
+                  }
                   return null;
                 },
                 onSaved: (newValue) {
