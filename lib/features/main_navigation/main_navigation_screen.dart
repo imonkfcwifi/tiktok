@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/main_navigation/widgets/nav_tab.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
@@ -9,20 +11,10 @@ class MainNavigationScreen extends StatefulWidget {
 }
 
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
-  final screens = [
-    const Center(
-      child: Text('Home!'),
-    ),
-    const Center(
-      child: Text('Search!'),
-    )
-  ];
-
   int _selectedIndex = 0;
 
   void _onTap(int index) {
     setState(() {
-      print(index);
       _selectedIndex = index;
     });
   }
@@ -30,27 +22,41 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: screens[_selectedIndex],
-        bottomNavigationBar: NavigationBar(
-          labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
-          selectedIndex: _selectedIndex,
-          onDestinationSelected: _onTap,
-          destinations: const [
-            NavigationDestination(
-              icon: FaIcon(
-                FontAwesomeIcons.house,
-                color: Colors.black,
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.black,
+        child: Padding(
+          padding: const EdgeInsets.all(Sizes.size16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              NavTap(
+                icon: FontAwesomeIcons.house,
+                isSelected: _selectedIndex == 0,
+                text: 'Home',
+                onTap: () => _onTap(0),
               ),
-              label: 'Home',
-            ),
-            NavigationDestination(
-              icon: FaIcon(
-                FontAwesomeIcons.magnifyingGlass,
-                color: Colors.black,
+              NavTap(
+                icon: FontAwesomeIcons.magnifyingGlass,
+                isSelected: _selectedIndex == 1,
+                text: 'Discover',
+                onTap: () => _onTap(1),
               ),
-              label: 'Search',
-            )
-          ],
-        ));
+              NavTap(
+                icon: FontAwesomeIcons.message,
+                isSelected: _selectedIndex == 3,
+                text: 'Inbox',
+                onTap: () => _onTap(3),
+              ),
+              NavTap(
+                icon: FontAwesomeIcons.user,
+                isSelected: _selectedIndex == 4,
+                text: 'Profile',
+                onTap: () => _onTap(4),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
