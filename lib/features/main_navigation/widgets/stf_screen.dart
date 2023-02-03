@@ -17,15 +17,29 @@ class _StfScreenState extends State<StfScreen> {
   }
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    print(_clicks);
+    super.dispose();
+    // so we need to just make the screen disappear without kiliing the screen
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text("$_clicks"),
-        TextButton(
-          onPressed: _increse,
-          child: const Text("+"),
-        )
-      ],
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            "$_clicks",
+            style: const TextStyle(fontSize: 28),
+          ),
+          TextButton(
+            onPressed: _increse,
+            child: const Text("+"),
+          )
+        ],
+      ),
     );
   }
 }
