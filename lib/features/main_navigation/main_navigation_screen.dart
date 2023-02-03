@@ -19,9 +19,37 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     });
   }
 
+  final screens = [
+    const Center(
+      child: Text(
+        'Home',
+        style: TextStyle(fontSize: 49),
+      ),
+    ),
+    const Center(
+      child: Text(
+        'Search',
+        style: TextStyle(fontSize: 49),
+      ),
+    ),
+    Container(),
+    const Center(
+      child: Text(
+        'Index',
+        style: TextStyle(fontSize: 49),
+      ),
+    ),
+    const Center(
+      child: Text(
+        'Profile',
+        style: TextStyle(fontSize: 49),
+      ),
+    ),
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      body: screens.elementAt(_selectedIndex),
       bottomNavigationBar: BottomAppBar(
         color: Colors.black,
         child: Padding(
@@ -31,24 +59,28 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
             children: [
               NavTap(
                 icon: FontAwesomeIcons.house,
+                selectedIcon: FontAwesomeIcons.house,
                 isSelected: _selectedIndex == 0,
                 text: 'Home',
                 onTap: () => _onTap(0),
               ),
               NavTap(
-                icon: FontAwesomeIcons.magnifyingGlass,
+                icon: FontAwesomeIcons.compass,
+                selectedIcon: FontAwesomeIcons.solidCompass,
                 isSelected: _selectedIndex == 1,
                 text: 'Discover',
                 onTap: () => _onTap(1),
               ),
               NavTap(
                 icon: FontAwesomeIcons.message,
+                selectedIcon: FontAwesomeIcons.solidMessage,
                 isSelected: _selectedIndex == 3,
                 text: 'Inbox',
                 onTap: () => _onTap(3),
               ),
               NavTap(
                 icon: FontAwesomeIcons.user,
+                selectedIcon: FontAwesomeIcons.solidUser,
                 isSelected: _selectedIndex == 4,
                 text: 'Profile',
                 onTap: () => _onTap(4),
