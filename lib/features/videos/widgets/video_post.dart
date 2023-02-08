@@ -70,8 +70,10 @@ class _VideoPostState extends State<VideoPost>
   void _togglePause() {
     if (_videoPlayerController.value.isPlaying) {
       _videoPlayerController.pause();
+      _animationController.reverse();
     } else {
       _videoPlayerController.play();
+      _animationController.forward();
     }
     setState(() {
       _isPause = !_isPause;
@@ -96,13 +98,24 @@ class _VideoPostState extends State<VideoPost>
           Positioned.fill(
               child: IgnorePointer(
             child: Center(
-              child: AnimatedOpacity(
-                opacity: _isPause ? 1 : 0,
-                duration: _animationDuration,
-                child: const FaIcon(
-                  FontAwesomeIcons.play,
-                  color: Colors.white,
-                  size: Sizes.size48,
+              child: AnimatedBuilder(
+                animation: _animationController,
+                // listen changes
+                builder: (context, child) {
+                  return Transform.scale(
+                    scale: _animationController.value,
+                    child: child,
+                    // send widget to child:AnimatedOpacity
+                  );
+                },
+                child: AnimatedOpacity(
+                  opacity: _isPause ? 1 : 0,
+                  duration: _animationDuration,
+                  child: const FaIcon(
+                    FontAwesomeIcons.play,
+                    color: Colors.white,
+                    size: Sizes.size48,
+                  ),
                 ),
               ),
             ),
