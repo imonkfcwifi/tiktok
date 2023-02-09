@@ -181,7 +181,7 @@ class _VideoPostState extends State<VideoPost>
                   ),
                   Gaps.v16,
                   VideoButton(
-                    icon: FontAwesomeIcons.solidHeart,
+                    icon: FontAwesomeIcons.solidThumbsUp,
                     text: "2.1M",
                   ),
                   Gaps.v16,
