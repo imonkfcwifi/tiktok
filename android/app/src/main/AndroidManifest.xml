@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.tiktok_clone">
+    package="com.example.please_work">
    <application
-        android:label="tiktok_clone"
+        android:label="please_work"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tiktok_clone/constants/gaps.dart';
-import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/features/authentication/widgets/form_button.dart';
-import 'package:tiktok_clone/features/onboarding/interests_screen.dart';
+
+import '../../constants/gaps.dart';
+import '../../constants/sizes.dart';
+import '../onboarding/interests_screen.dart';
+import 'widgets/form_button.dart';
 
 class BirthdayScreen extends StatefulWidget {
   const BirthdayScreen({super.key});

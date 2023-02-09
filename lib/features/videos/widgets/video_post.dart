@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:tiktok_clone/constants/sizes.dart';
+
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
+
+import '../../../constants/gaps.dart';
+import '../../../constants/sizes.dart';
+import 'video_button.dart';
 
 class VideoPost extends StatefulWidget {
   const VideoPost(
@@ -18,10 +22,12 @@ class _VideoPostState extends State<VideoPost>
     with SingleTickerProviderStateMixin {
   final VideoPlayerController _videoPlayerController =
       VideoPlayerController.asset("assets/videos/video.mp4");
-
+// singleTickerProviderStateMixin and Vsync provides the animation with a callback
+  // Ticker will do that on every animation frame
   late final AnimationController _animationController;
 
   bool _isPause = false;
+  bool _tapMore = false;
 
   final Duration _animationDuration = const Duration(milliseconds: 200);
 
@@ -37,8 +43,9 @@ class _VideoPostState extends State<VideoPost>
   void _initVideoPlayer() async {
     await _videoPlayerController.initialize();
     _videoPlayerController.play();
-    setState(() {});
+    await _videoPlayerController.setLooping(true);
     _videoPlayerController.addListener(_onVideoChanged);
+    setState(() {});
   }
 
   @override
@@ -80,6 +87,11 @@ class _VideoPostState extends State<VideoPost>
     });
   }
 
+  void _seeMore() {
+    _tapMore = !_tapMore;
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return VisibilityDetector(
@@ -119,7 +131,71 @@ class _VideoPostState extends State<VideoPost>
                 ),
               ),
             ),
-          ))
+          )),
+          Positioned(
+              bottom: 20,
+              left: 20,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "@imonkfcwifi",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w500,
+                        fontSize: Sizes.size20),
+                  ),
+                  Gaps.v10,
+                  const Text(
+                    "KSan'te",
+                    style:
+                        TextStyle(color: Colors.white, fontSize: Sizes.size16),
+                  ),
+                  Gaps.v10,
+                  GestureDetector(
+                    onTap: _seeMore,
+                    child: _tapMore
+                        ? const Text("#League of legend, #KsanTe, #sanTek",
+                            style: TextStyle(
+                                color: Colors.white, fontSize: Sizes.size16))
+                        : const Text(
+                            "#League.. See more",
+                            style: TextStyle(
+                                color: Colors.white, fontSize: Sizes.size16),
+                          ),
+                  ),
+                ],
+              )),
+          Positioned(
+              bottom: 20,
+              right: 10,
+              child: Column(
+                children: const [
+                  CircleAvatar(
+                    radius: 25,
+                    backgroundColor: Colors.white,
+                    foregroundImage: NetworkImage(
+                      "https://images.contentstack.io/v3/assets/blt731acb42bb3d1659/blt15d3facea57e5b7e/634613111338101198fce129/K_Sante-Base-Splash.jpg",
+                    ),
+                    child: Text("크산테"),
+                  ),
+                  Gaps.v16,
+                  VideoButton(
+                    icon: FontAwesomeIcons.solidHeart,
+                    text: "2.1M",
+                  ),
+                  Gaps.v16,
+                  VideoButton(
+                    icon: FontAwesomeIcons.solidComment,
+                    text: "12.13M",
+                  ),
+                  Gaps.v16,
+                  VideoButton(
+                    icon: FontAwesomeIcons.share,
+                    text: "11.13M",
+                  ),
+                ],
+              ))
         ],
       ),
     );

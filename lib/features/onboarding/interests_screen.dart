@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tiktok_clone/constants/gaps.dart';
-import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/features/onboarding/tutorial_screen.dart';
-import 'package:tiktok_clone/features/onboarding/widgets/interest_button.dart';
+
+import '../../constants/gaps.dart';
+import '../../constants/sizes.dart';
+import 'tutorial_screen.dart';
+import 'widgets/interest_button.dart';
 
 const interests = [
   "Daily Life",
