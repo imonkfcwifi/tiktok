@@ -97,6 +97,7 @@ class _VideoPostState extends State<VideoPost>
 
   void _onCommentsTap(BuildContext context) async {
     await showModalBottomSheet(
+      isScrollControlled: true,
       context: context,
       builder: (context) => const VideoComments(),
       backgroundColor: Colors.transparent,

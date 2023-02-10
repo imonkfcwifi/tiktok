@@ -17,7 +17,9 @@ class _VideoCommentsState extends State<VideoComments> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Container(
+      height: size.height * 0.7,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(Sizes.size14),
       ),
@@ -34,62 +36,96 @@ class _VideoCommentsState extends State<VideoComments> {
             )
           ],
         ),
-        body: ListView.separated(
-          separatorBuilder: (context, index) => Gaps.v20,
-          padding: const EdgeInsets.symmetric(
-              vertical: Sizes.size10, horizontal: Sizes.size16),
-          itemCount: 10,
-          itemBuilder: (context, index) => Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const CircleAvatar(
-                radius: 18,
-                child: Text("San'Te"),
-              ),
-              Gaps.h10,
-              Expanded(
-                  child: Column(
+        body: Stack(
+          children: [
+            ListView.separated(
+              separatorBuilder: (context, index) => Gaps.v20,
+              padding: const EdgeInsets.symmetric(
+                  vertical: Sizes.size10, horizontal: Sizes.size16),
+              itemCount: 10,
+              itemBuilder: (context, index) => Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'data',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: Sizes.size14,
-                      color: Colors.grey.shade400,
-                    ),
+                  const CircleAvatar(
+                    radius: 18,
+                    child: Text("San'Te"),
                   ),
-                  Gaps.v3,
-                  const Text("'a b c d e f g h"),
-                ],
-              )),
-              Gaps.h10,
-              Column(
-                children: [
-                  FaIcon(FontAwesomeIcons.heart,
-                      size: Sizes.size20, color: Colors.grey.shade400),
-                  Gaps.v2,
-                  Text(
-                    '52.1K',
-                    style: TextStyle(color: Colors.grey.shade400),
+                  Gaps.h10,
+                  Expanded(
+                      child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'data',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: Sizes.size14,
+                          color: Colors.grey.shade400,
+                        ),
+                      ),
+                      Gaps.v3,
+                      const Text("'a b c d e f g h"),
+                    ],
+                  )),
+                  Gaps.h10,
+                  Column(
+                    children: [
+                      FaIcon(FontAwesomeIcons.heart,
+                          size: Sizes.size20, color: Colors.grey.shade400),
+                      Gaps.v2,
+                      Text(
+                        '52.1K',
+                        style: TextStyle(color: Colors.grey.shade400),
+                      )
+                    ],
                   )
                 ],
-              )
-            ],
-          ),
-        ),
-        bottomNavigationBar: BottomAppBar(
-          color: Colors.white,
-          child: Row(
-            children: [
-              CircleAvatar(
-                radius: 18,
-                backgroundColor: Colors.grey.shade500,
-                foregroundColor: Colors.white,
-                child: const Text("user"),
               ),
-            ],
-          ),
+            ),
+            Positioned(
+              width: size.width,
+              bottom: 0,
+              child: BottomAppBar(
+                color: Colors.white,
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                    left: Sizes.size16,
+                    right: Sizes.size16,
+                    bottom: Sizes.size10,
+                    top: Sizes.size5,
+                  ),
+                  child: Row(
+                    children: [
+                      CircleAvatar(
+                        radius: 18,
+                        backgroundColor: Colors.grey.shade500,
+                        foregroundColor: Colors.white,
+                        child: const Text("user"),
+                      ),
+                      Gaps.h11,
+                      Expanded(
+                        child: TextField(
+                          decoration: InputDecoration(
+                            hintText: "Write a comment...",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(Sizes.size12),
+                              borderSide: BorderSide.none,
+                            ),
+                            filled: true,
+                            fillColor: Colors.grey.shade400,
+                            contentPadding: const EdgeInsets.symmetric(
+                              horizontal: Sizes.size12,
+                              vertical: Sizes.size12,
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            )
+          ],
         ),
       ),
     );
