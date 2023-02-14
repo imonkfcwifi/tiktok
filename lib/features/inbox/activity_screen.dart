@@ -58,13 +58,23 @@ class _ActivityScreenState extends State<ActivityScreen>
     // 비율로 생각해야함 (not a pixels)
   ).animate(_animationController);
 
-  void _onTitleTap() {
+  late final Animation<Color?> _barrierAnimation = ColorTween(
+    begin: Colors.transparent,
+    end: Colors.black38,
+  ).animate(_animationController);
+
+  void _toggleAnimation() async {
     if (_animationController.isCompleted) {
-      _animationController.reverse();
+      await _animationController.reverse();
     } else {
       _animationController.forward();
     }
+    setState(() {
+      _showBarrier = !_showBarrier;
+    });
   }
+
+  bool _showBarrier = false;
 
   @override
   void dispose() {
@@ -77,7 +87,7 @@ class _ActivityScreenState extends State<ActivityScreen>
     return Scaffold(
       appBar: AppBar(
         title: GestureDetector(
-          onTap: _onTitleTap,
+          onTap: _toggleAnimation,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -178,6 +188,12 @@ class _ActivityScreenState extends State<ActivityScreen>
                 ),
             ],
           ),
+          if (_showBarrier)
+            AnimatedModalBarrier(
+              color: _barrierAnimation,
+              dismissible: true,
+              onDismiss: _toggleAnimation,
+            ),
           SlideTransition(
             position: _pannelAnimation,
             child: Container(
@@ -214,7 +230,7 @@ class _ActivityScreenState extends State<ActivityScreen>
                 ],
               ),
             ),
-          )
+          ),
         ],
       ),
     );
