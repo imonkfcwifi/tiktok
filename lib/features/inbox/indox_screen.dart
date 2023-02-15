@@ -2,11 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/inbox/activity_screen.dart';
+import 'package:tiktok_clone/features/inbox/chats_screen.dart';
 
-class InboxScreen extends StatelessWidget {
+class InboxScreen extends StatefulWidget {
   const InboxScreen({super.key});
 
-  void _onDm() {}
+  @override
+  State<InboxScreen> createState() => _InboxScreenState();
+}
+
+class _InboxScreenState extends State<InboxScreen> {
+  void _onDmPressed() {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => const ChatScreen(),
+    ));
+  }
+
   void _onActivityTap(BuildContext context) {
     Navigator.of(context).push(MaterialPageRoute(
       builder: (context) => const ActivityScreen(),
@@ -21,9 +32,11 @@ class InboxScreen extends StatelessWidget {
         title: const Text("indox"),
         actions: [
           IconButton(
-            onPressed: _onDm,
+            onPressed: _onDmPressed,
             icon: const FaIcon(FontAwesomeIcons.paperPlane),
           )
+          // stateless wudget의 methods context는 () => _onActivityTap(context) (exx)
+          // statefull widget은 _onActivityTap
         ],
       ),
       body: ListView(
