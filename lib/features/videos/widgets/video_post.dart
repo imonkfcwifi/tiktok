@@ -10,10 +10,15 @@ import '../../../constants/sizes.dart';
 import 'video_button.dart';
 
 class VideoPost extends StatefulWidget {
-  const VideoPost(
-      {super.key, required this.onVideoFinished, required this.index});
   final Function onVideoFinished;
+
   final int index;
+
+  const VideoPost({
+    super.key,
+    required this.onVideoFinished,
+    required this.index,
+  });
 
   @override
   State<VideoPost> createState() => _VideoPostState();
@@ -23,16 +28,15 @@ class _VideoPostState extends State<VideoPost>
     with SingleTickerProviderStateMixin {
   final VideoPlayerController _videoPlayerController =
       VideoPlayerController.asset("assets/videos/video.mp4");
-// singleTickerProviderStateMixin and Vsync provides the animation with a callback
-  // Ticker will do that on every animation frame
-  late final AnimationController _animationController;
-
-  bool _isPause = false;
-  bool _tapMore = false;
 
   final Duration _animationDuration = const Duration(milliseconds: 200);
 
-  void _onVideoChanged() {
+  late final AnimationController _animationController;
+
+  bool _isPaused = false;
+  bool _tapMore = false;
+
+  void _onVideoChange() {
     if (_videoPlayerController.value.isInitialized) {
       if (_videoPlayerController.value.duration ==
           _videoPlayerController.value.position) {
@@ -45,7 +49,12 @@ class _VideoPostState extends State<VideoPost>
     await _videoPlayerController.initialize();
     _videoPlayerController.play();
     await _videoPlayerController.setLooping(true);
-    _videoPlayerController.addListener(_onVideoChanged);
+    _videoPlayerController.addListener(_onVideoChange);
+    setState(() {});
+  }
+
+  void _seeMore() {
+    _tapMore = !_tapMore;
     setState(() {});
   }
 
@@ -53,12 +62,12 @@ class _VideoPostState extends State<VideoPost>
   void initState() {
     super.initState();
     _initVideoPlayer();
+
     _animationController = AnimationController(
       vsync: this,
       lowerBound: 1.0,
       upperBound: 1.5,
       value: 1.5,
-      // default 1.5 -> 1.0
       duration: _animationDuration,
     );
   }
@@ -71,16 +80,16 @@ class _VideoPostState extends State<VideoPost>
 
   void _onVisibilityChanged(VisibilityInfo info) {
     if (info.visibleFraction == 1 &&
-        _isPause &&
-        _videoPlayerController.value.isPlaying) {
+        !_isPaused &&
+        !_videoPlayerController.value.isPlaying) {
       _videoPlayerController.play();
     }
     if (_videoPlayerController.value.isPlaying && info.visibleFraction == 0) {
-      _togglePause();
+      _onTogglePause();
     }
   }
 
-  void _togglePause() {
+  void _onTogglePause() {
     if (_videoPlayerController.value.isPlaying) {
       _videoPlayerController.pause();
       _animationController.reverse();
@@ -89,22 +98,21 @@ class _VideoPostState extends State<VideoPost>
       _animationController.forward();
     }
     setState(() {
-      _isPause = !_isPause;
+      _isPaused = !_isPaused;
     });
   }
 
-  void _seeMore() {
-    _tapMore = !_tapMore;
-    setState(() {});
-  }
-
   void _onCommentsTap(BuildContext context) async {
+    if (_videoPlayerController.value.isPlaying) {
+      _onTogglePause();
+    }
     await showModalBottomSheet(
-      isScrollControlled: true,
       context: context,
-      builder: (context) => const VideoComments(),
+      isScrollControlled: true,
       backgroundColor: Colors.transparent,
+      builder: (context) => const VideoComments(),
     );
+    _onTogglePause();
   }
 
   @override
@@ -121,99 +129,98 @@ class _VideoPostState extends State<VideoPost>
                     color: Colors.black,
                   ),
           ),
-          Positioned.fill(child: GestureDetector(onTap: _togglePause)),
           Positioned.fill(
-              child: IgnorePointer(
-            child: Center(
-              child: AnimatedBuilder(
-                animation: _animationController,
-                // listen changes
-                builder: (context, child) {
-                  return Transform.scale(
-                    scale: _animationController.value,
-                    child: child,
-                    // send widget to child:AnimatedOpacity
-                  );
-                },
-                child: AnimatedOpacity(
-                  opacity: _isPause ? 1 : 0,
-                  duration: _animationDuration,
-                  child: const FaIcon(
-                    FontAwesomeIcons.play,
-                    color: Colors.white,
-                    size: Sizes.size48,
+            child: GestureDetector(
+              onTap: _onTogglePause,
+            ),
+          ),
+          Positioned.fill(
+            child: IgnorePointer(
+              child: Center(
+                child: AnimatedBuilder(
+                  animation: _animationController,
+                  builder: (context, child) {
+                    return Transform.scale(
+                      scale: _animationController.value,
+                      child: child,
+                    );
+                  },
+                  child: AnimatedOpacity(
+                    opacity: _isPaused ? 1 : 0,
+                    duration: _animationDuration,
+                    child: const FaIcon(
+                      FontAwesomeIcons.play,
+                      color: Colors.white,
+                      size: Sizes.size52,
+                    ),
                   ),
                 ),
               ),
             ),
-          )),
+          ),
           Positioned(
-              bottom: 20,
-              left: 20,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    "@imonkfcwifi",
+            bottom: 20,
+            left: 10,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  "@니꼬",
+                  style: TextStyle(
+                    fontSize: Sizes.size20,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Gaps.v10,
+                GestureDetector(
+                  onTap: _seeMore,
+                  child: const Text(
+                    "This is my house in Thailand!!!",
                     style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w500,
-                        fontSize: Sizes.size20),
+                      fontSize: Sizes.size16,
+                      color: Colors.white,
+                    ),
                   ),
-                  Gaps.v10,
-                  const Text(
-                    "KSan'te",
-                    style:
-                        TextStyle(color: Colors.white, fontSize: Sizes.size16),
-                  ),
-                  Gaps.v10,
-                  GestureDetector(
-                    onTap: _seeMore,
-                    child: _tapMore
-                        ? const Text("#League of legend, #KsanTe, #sanTek",
-                            style: TextStyle(
-                                color: Colors.white, fontSize: Sizes.size16))
-                        : const Text(
-                            "#League.. See more",
-                            style: TextStyle(
-                                color: Colors.white, fontSize: Sizes.size16),
-                          ),
-                  ),
-                ],
-              )),
+                )
+              ],
+            ),
+          ),
           Positioned(
-              bottom: 20,
-              right: 10,
-              child: Column(
-                children: [
-                  const CircleAvatar(
-                    radius: 25,
-                    backgroundColor: Colors.white,
-                    foregroundImage: NetworkImage(
-                      "https://images.contentstack.io/v3/assets/blt731acb42bb3d1659/blt15d3facea57e5b7e/634613111338101198fce129/K_Sante-Base-Splash.jpg",
-                    ),
-                    child: Text("크산테"),
+            bottom: 20,
+            right: 10,
+            child: Column(
+              children: [
+                const CircleAvatar(
+                  radius: 25,
+                  backgroundColor: Colors.black,
+                  foregroundColor: Colors.white,
+                  foregroundImage: NetworkImage(
+                    "https://avatars.githubusercontent.com/u/3612017",
                   ),
-                  Gaps.v16,
-                  const VideoButton(
-                    icon: FontAwesomeIcons.solidThumbsUp,
-                    text: "2.1M",
+                  child: Text("니꼬"),
+                ),
+                Gaps.v24,
+                const VideoButton(
+                  icon: FontAwesomeIcons.solidHeart,
+                  text: "2.9M",
+                ),
+                Gaps.v24,
+                GestureDetector(
+                  onTap: () => _onCommentsTap(context),
+                  child: const VideoButton(
+                    icon: FontAwesomeIcons.solidComment,
+                    text: "33K",
                   ),
-                  Gaps.v16,
-                  GestureDetector(
-                    onTap: () => _onCommentsTap(context),
-                    child: const VideoButton(
-                      icon: FontAwesomeIcons.solidComment,
-                      text: "12.13M",
-                    ),
-                  ),
-                  Gaps.v16,
-                  const VideoButton(
-                    icon: FontAwesomeIcons.share,
-                    text: "11.13M",
-                  ),
-                ],
-              ))
+                ),
+                Gaps.v24,
+                const VideoButton(
+                  icon: FontAwesomeIcons.share,
+                  text: "Share",
+                )
+              ],
+            ),
+          ),
         ],
       ),
     );

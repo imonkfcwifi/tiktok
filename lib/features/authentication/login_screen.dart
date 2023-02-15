@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
 import '../../constants/gaps.dart';
 import '../../constants/sizes.dart';
 import 'login_form_screen.dart';
@@ -8,13 +7,12 @@ import 'widgets/auth_button.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
-
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  void onSignUpTap() {
+  void onSignUpTap(BuildContext context) {
     Navigator.of(context).pop();
   }
 
@@ -87,7 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               Gaps.h5,
               GestureDetector(
-                onTap: onSignUpTap,
+                onTap: () => onSignUpTap(context),
                 child: Text(
                   'Sign Up',
                   style: TextStyle(

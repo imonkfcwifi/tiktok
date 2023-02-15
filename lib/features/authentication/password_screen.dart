@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
 import '../../constants/gaps.dart';
 import '../../constants/sizes.dart';
 import 'birthday_screen.dart';
@@ -18,11 +17,9 @@ bool _obscureText = true;
 
 class _PasswordScreenState extends State<PasswordScreen> {
   final TextEditingController _passwordController = TextEditingController();
-
   @override
   void initState() {
     super.initState();
-
     _passwordController.addListener(() {
       setState(() {
         _password = _passwordController.text;
