@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/inbox/chat_detail_creen.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -10,7 +11,74 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  void _onPressedPlus() {}
+  final GlobalKey<AnimatedListState> _key = GlobalKey<AnimatedListState>();
+
+  void _onPressedPlus() {
+    if (_key.currentState != null) {
+      _key.currentState!.insertItem(_items.length);
+      _items.add(_items.length);
+    }
+  }
+// AnimatedListState에 접근
+
+  final List<int> _items = [];
+
+  final Duration _duration = const Duration(milliseconds: 300);
+
+  void _deletePress(int index) {
+    if (_key.currentState != null) {
+      _key.currentState!.removeItem(
+        index,
+        (context, animation) => SizeTransition(
+          sizeFactor: animation,
+          child: _makeTile(index),
+        ),
+        duration: _duration,
+      );
+      _items.remove(index);
+    }
+  }
+
+  void _onChatTap() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const ChatDetailScreen(),
+      ),
+    );
+  }
+
+  Widget _makeTile(int index) {
+    return ListTile(
+      onTap: _onChatTap,
+      onLongPress: () => _deletePress(index),
+      leading: const CircleAvatar(
+        foregroundImage: NetworkImage(
+          "https://avatars.githubusercontent.com/u/110550852?v=4",
+        ),
+        radius: 25,
+        child: Text('ksante'),
+      ),
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Text(
+            'username ($index)',
+            style: const TextStyle(
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          Text(
+            '2:38PM',
+            style:
+                TextStyle(color: Colors.grey.shade500, fontSize: Sizes.size12),
+          ),
+        ],
+      ),
+      subtitle: const Text('Hey~!'),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,39 +94,19 @@ class _ChatScreenState extends State<ChatScreen> {
           )
         ],
       ),
-      body: ListView(
+      body: AnimatedList(
+        key: _key,
         padding: const EdgeInsets.symmetric(
           vertical: Sizes.size10,
         ),
-        children: [
-          ListTile(
-            leading: const CircleAvatar(
-              foregroundImage: NetworkImage(
-                "https://avatars.githubusercontent.com/u/110550852?v=4",
-              ),
-              radius: 25,
-              child: Text('ksante'),
-            ),
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                const Text(
-                  'username',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                Text(
-                  '2:38PM',
-                  style: TextStyle(
-                      color: Colors.grey.shade500, fontSize: Sizes.size12),
-                ),
-              ],
-            ),
-            subtitle: const Text('Hey~!'),
-          )
-        ],
+        itemBuilder: (context, index, animation) {
+          return FadeTransition(
+            key: UniqueKey(),
+            opacity: animation,
+            child:
+                SizeTransition(sizeFactor: animation, child: _makeTile(index)),
+          );
+        },
       ),
     );
   }
