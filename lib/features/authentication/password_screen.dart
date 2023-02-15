@@ -10,7 +10,7 @@ class PasswordScreen extends StatefulWidget {
   const PasswordScreen({super.key});
 
   @override
-  State<PasswordScreen> createState() => _PasswordScreenState();
+  State<PasswordScreen> createState _PasswordScreenState();
 }
 
 String _password = "";

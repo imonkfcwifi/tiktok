@@ -14,7 +14,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  void onSignUpTap(BuildContext context) {
+  void onSignUpTap() {
     Navigator.of(context).pop();
   }
 
@@ -87,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               Gaps.h5,
               GestureDetector(
-                onTap: () => onSignUpTap(context),
+                onTap: onSignUpTap,
                 child: Text(
                   'Sign Up',
                   style: TextStyle(
