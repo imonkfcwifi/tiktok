@@ -14,6 +14,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     return CustomScrollView(
       slivers: [
         // sliver "just a scroll view"
+        // "스크롤 가능한 구역"
         SliverAppBar(
           snap: true,
           floating: true,
@@ -34,6 +35,18 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             ),
             title: const Text("Users"),
           ),
+        ),
+        SliverToBoxAdapter(
+          child: Column(children: const [
+            CircleAvatar(
+              backgroundColor: Colors.red,
+              radius: 20,
+            )
+          ]),
+        ),
+        SliverPersistentHeader(
+          delegate: CustomDelegate(),
+          pinned: true,
         ),
         SliverFixedExtentList(
             delegate: SliverChildBuilderDelegate(
@@ -62,5 +75,41 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             ))
       ],
     );
+  }
+}
+
+class CustomDelegate extends SliverPersistentHeaderDelegate {
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return Container(
+      color: Colors.indigo,
+      child: const FractionallySizedBox(
+        heightFactor: 1,
+        child: Center(
+          child: Text(
+            "title",
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ),
+      // FractionallySizedBox : 부모로부터 최대한 많은 공간 차지
+    );
+  }
+
+  @override
+  double get maxExtent => 100;
+  // 최대높이
+
+  @override
+  double get minExtent => 100;
+// 최저높이
+  @override
+  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
+    return false;
+    // maxExtent , minExtent 값 변경원할시 true return
+    // build에서 완전히 다른 widget tree return 시 false
   }
 }
