@@ -137,6 +137,29 @@ class _SettingScreenState extends State<SettingScreen> {
                     ),
                   );
                 }),
+            ListTile(
+                title: const Text(
+                  "data (ios. buttom) ",
+                ),
+                textColor: Colors.red,
+                onTap: () {
+                  showCupertinoModalPopup(
+                    context: context,
+                    builder: (context) => CupertinoActionSheet(
+                      message: const Text("data2"),
+                      title: const Text("data"),
+                      actions: [
+                        CupertinoActionSheetAction(
+                            onPressed: () => Navigator.of(context).pop(),
+                            child: const Text("Not Log Out")),
+                        CupertinoActionSheetAction(
+                            isDestructiveAction: true,
+                            onPressed: () => Navigator.of(context).pop(),
+                            child: const Text("yes"))
+                      ],
+                    ),
+                  );
+                }),
             const AboutListTile()
           ],
         ));
