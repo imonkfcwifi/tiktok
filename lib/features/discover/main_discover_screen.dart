@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok_clone/constants/breakpoints.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 
@@ -40,6 +41,9 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    //  미디어 쿼리는 화면 해상도, 기기 방향 등의 조건으로 HTML에 적용하는
+    //   스타일을 전환할 수 있는 CSS3의 속성 중 하나
     return DefaultTabController(
       length: tabs.length,
       child: Scaffold(
@@ -84,8 +88,8 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                 padding: const EdgeInsets.all(
                   Sizes.size6,
                 ),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: width > Breakpoints.lg ? 5 : 2,
                   crossAxisSpacing: Sizes.size10,
                   mainAxisSpacing: Sizes.size10,
                   childAspectRatio: 9 / 20,
