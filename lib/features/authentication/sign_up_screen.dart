@@ -39,11 +39,11 @@ class SignUpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return OrientationBuilder(
       builder: (context, orientation) {
-        if (orientation == Orientation.landscape) {
+/*         if (orientation == Orientation.landscape) {
           return const Scaffold(
             body: Center(child: Text("Please Rotate your phone")),
           );
-        }
+        } */
         print(orientation);
         return Scaffold(
           body: SafeArea(
