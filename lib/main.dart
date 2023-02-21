@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:tiktok_clone/features/main_navigation/main_navigation_screen.dart';
 
 import 'constants/sizes.dart';
 
@@ -43,33 +44,7 @@ class TikTokApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const LayoutBuilderCodeLab(),
-    );
-  }
-}
-
-class LayoutBuilderCodeLab extends StatelessWidget {
-  const LayoutBuilderCodeLab({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    return Scaffold(
-      body: LayoutBuilder(
-        // 어디에 layout을 두드냐에 따라 layoutBuilder는 mediaquery의 size와 다른값을 나타낸다.
-        // screen size와 father size와 관계없음
-        builder: (context, constraints) => Container(
-          width: constraints.maxWidth,
-          height: constraints.maxHeight,
-          color: Colors.teal,
-          child: Center(
-            child: Text(
-              "${constraints.maxWidth} / ${size.width}",
-              style: const TextStyle(color: Colors.white, fontSize: 98),
-            ),
-          ),
-        ),
-      ),
+      home: const MainNavigationScreen(),
     );
   }
 }
