@@ -50,10 +50,16 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           elevation: 1,
-          title: CupertinoSearchTextField(
-            controller: _textEditingController,
-            onChanged: _onSearchChanged,
-            onSubmitted: _onSearchSubmit,
+          title: ConstrainedBox(
+            // 자식 위젯의 너비나 높이의 최댓값, 최솟값을 설정할 수 있다.
+            constraints: const BoxConstraints(
+              maxWidth: Breakpoints.sm,
+            ),
+            child: CupertinoSearchTextField(
+              controller: _textEditingController,
+              onChanged: _onSearchChanged,
+              onSubmitted: _onSearchSubmit,
+            ),
           ),
           bottom: TabBar(
             onTap: (value) => focusout(context),
