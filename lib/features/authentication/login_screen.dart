@@ -34,17 +34,12 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            children: const [
+            children: [
               Gaps.v80,
-              Text(
-                "Login for TikTok",
-                style: TextStyle(
-                  fontSize: Sizes.size24,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
+              Text("Login for TikTok",
+                  style: Theme.of(context).textTheme.headlineLarge),
               Gaps.v20,
-              Text(
+              const Text(
                 "Manage your account, check notifications, comment on videos, and more.",
                 style: TextStyle(
                   fontSize: Sizes.size16,
@@ -53,13 +48,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 textAlign: TextAlign.center,
               ),
               Gaps.v40,
-              AuthButton(
+              const AuthButton(
                 icon: FaIcon(FontAwesomeIcons.solidUser),
                 text: "Use Email",
                 button: LoginFormScreen(),
               ),
               Gaps.v16,
-              AuthButton(
+              const AuthButton(
                 icon: FaIcon(FontAwesomeIcons.apple),
                 text: "Continue with Apple",
               ),
