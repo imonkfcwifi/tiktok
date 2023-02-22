@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:tiktok_clone/features/authentication/sign_up_screen.dart';
 
 import 'constants/sizes.dart';
@@ -29,33 +28,39 @@ class TikTokApp extends StatelessWidget {
       title: 'TikTok Clonegit init',
       themeMode: ThemeMode.system,
       theme: ThemeData(
-        brightness: Brightness.light,
-        textTheme: GoogleFonts.itimTextTheme(),
-        splashColor: Colors.transparent,
-        primaryColor: const Color(0xFFE9435A),
-        textSelectionTheme:
-            const TextSelectionThemeData(cursorColor: Color(0xFFE9435A)),
-        scaffoldBackgroundColor: Colors.white,
-        appBarTheme: const AppBarTheme(
-          centerTitle: true,
-          foregroundColor: Colors.black,
-          backgroundColor: Colors.white,
-          elevation: 0,
-          titleTextStyle: TextStyle(
-            fontSize: Sizes.size16 + Sizes.size2,
-            fontWeight: FontWeight.w600,
-            color: Colors.black,
+          tabBarTheme: TabBarTheme(
+            labelColor: Colors.black,
+            unselectedLabelColor: Colors.grey.shade500,
           ),
-        ),
-      ),
+          indicatorColor: Colors.black,
+          brightness: Brightness.light,
+          textTheme: Typography.blackCupertino,
+          splashColor: Colors.transparent,
+          primaryColor: const Color(0xFFE9435A),
+          textSelectionTheme:
+              const TextSelectionThemeData(cursorColor: Color(0xFFE9435A)),
+          scaffoldBackgroundColor: Colors.white,
+          appBarTheme: const AppBarTheme(
+            centerTitle: true,
+            foregroundColor: Colors.black,
+            backgroundColor: Colors.white,
+            elevation: 0,
+            titleTextStyle: TextStyle(
+              fontSize: Sizes.size16 + Sizes.size2,
+              fontWeight: FontWeight.w600,
+              color: Colors.black,
+            ),
+          ),
+          listTileTheme: const ListTileThemeData(iconColor: Colors.black)),
       darkTheme: ThemeData(
-        textTheme: GoogleFonts.itimTextTheme(
-          ThemeData(brightness: Brightness.dark).textTheme,
-        ),
-        brightness: Brightness.dark,
+        indicatorColor: Colors.white,
+        appBarTheme: AppBarTheme(backgroundColor: Colors.grey.shade900),
+        textTheme: Typography.whiteCupertino,
         scaffoldBackgroundColor: Colors.black,
         primaryColor: const Color(0xFFE9435A),
         bottomAppBarTheme: BottomAppBarTheme(color: Colors.grey.shade900),
+        textSelectionTheme:
+            const TextSelectionThemeData(cursorColor: Color(0xFFE9435A)),
       ),
       home: const SignUpScreen(),
     );

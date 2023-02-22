@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../../constants/gaps.dart';
-import '../../constants/sizes.dart';
-import 'login_form_screen.dart';
-import 'widgets/auth_button.dart';
+import 'package:tiktok_clone/constants/gaps.dart';
+import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/authentication/login_form_screen.dart';
+import 'package:tiktok_clone/features/authentication/widgets/auth_button.dart';
+import 'package:tiktok_clone/utils.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
-  @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
 
-class _LoginScreenState extends State<LoginScreen> {
-  void onSignUpTap(BuildContext context) {
+  void _onSignUpTap(BuildContext context) {
     Navigator.of(context).pop();
   }
 
@@ -33,25 +30,33 @@ class _LoginScreenState extends State<LoginScreen> {
             horizontal: Sizes.size40,
           ),
           child: Column(
-            mainAxisSize: MainAxisSize.min,
             children: [
               Gaps.v80,
-              Text("Login for TikTok",
-                  style: Theme.of(context).textTheme.headlineLarge),
-              Gaps.v20,
               const Text(
-                "Manage your account, check notifications, comment on videos, and more.",
+                "Log in to TikTok",
                 style: TextStyle(
-                  fontSize: Sizes.size16,
-                  color: Colors.black45,
+                  fontSize: Sizes.size24,
+                  fontWeight: FontWeight.w700,
                 ),
-                textAlign: TextAlign.center,
+              ),
+              Gaps.v20,
+              const Opacity(
+                opacity: 0.7,
+                child: Text(
+                  "Manage your account, check notifications, comment on videos, and more.",
+                  style: TextStyle(
+                    fontSize: Sizes.size16,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
               ),
               Gaps.v40,
-              const AuthButton(
-                icon: FaIcon(FontAwesomeIcons.solidUser),
-                text: "Use Email",
-                button: LoginFormScreen(),
+              GestureDetector(
+                onTap: () => _onEmailLoginTap(context),
+                child: const AuthButton(
+                  icon: FaIcon(FontAwesomeIcons.user),
+                  text: "Use email & password",
+                ),
               ),
               Gaps.v16,
               const AuthButton(
@@ -63,7 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-        color: Colors.grey.shade100,
+        color: isDartMode(context) ? null : Colors.grey.shade50,
         elevation: 2,
         child: Padding(
           padding: const EdgeInsets.symmetric(
@@ -73,16 +78,16 @@ class _LoginScreenState extends State<LoginScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text(
-                'Dont have any account?',
+                "Don't have an account?",
                 style: TextStyle(
                   fontSize: Sizes.size16,
                 ),
               ),
               Gaps.h5,
               GestureDetector(
-                onTap: () => onSignUpTap(context),
+                onTap: () => _onSignUpTap(context),
                 child: Text(
-                  'Sign Up',
+                  "Sign up",
                   style: TextStyle(
                     fontSize: Sizes.size16,
                     fontWeight: FontWeight.w600,
