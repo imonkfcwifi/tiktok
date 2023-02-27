@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tiktok_clone/features/authentication/sign_up_screen.dart';
+import 'package:tiktok_clone/router.dart';
 
 import 'constants/sizes.dart';
 
@@ -23,7 +23,8 @@ class TikTokApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
+      routerConfig: router,
       debugShowCheckedModeBanner: false,
       title: 'TikTok Clonegit init',
       themeMode: ThemeMode.system,
@@ -62,7 +63,6 @@ class TikTokApp extends StatelessWidget {
         textSelectionTheme:
             const TextSelectionThemeData(cursorColor: Color(0xFFE9435A)),
       ),
-      home: const SignUpScreen(),
     );
   }
 }
