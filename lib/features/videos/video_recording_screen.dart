@@ -11,11 +11,25 @@ class VideoRecordingScreen extends StatefulWidget {
   State<VideoRecordingScreen> createState() => _VideoRecordingScreenState();
 }
 
-class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
+class _VideoRecordingScreenState extends State<VideoRecordingScreen>
+    with TickerProviderStateMixin {
   bool _hasPer = false;
   bool _isSelfie = false;
   late FlashMode _flashMode;
   late CameraController _cameraController;
+  late final AnimationController _animationController = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 200),
+  );
+  late final Animation<double> _buttonAnimation =
+      Tween(begin: 1.0, end: 1.3).animate(_animationController);
+  late final AnimationController _progressAnimationController =
+      AnimationController(
+    vsync: this,
+    duration: const Duration(seconds: 60),
+    lowerBound: 0.0,
+    upperBound: 1.0,
+  );
   Future<void> initCamera() async {
     final cameras = await availableCameras();
     if (cameras.isEmpty) {
@@ -48,6 +62,14 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
   void initState() {
     super.initState();
     initPermissions();
+    _progressAnimationController.addListener(() {
+      setState(() {});
+    });
+    _progressAnimationController.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        _stopRecording();
+      }
+    });
   }
 
   Future<void> _toggleSelfieMode() async {
@@ -62,6 +84,16 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
     setState(() {});
   }
 
+  void _startRecording(TapDownDetails context) {
+    _animationController.forward();
+    _progressAnimationController.forward();
+  }
+
+  void _stopRecording() {
+    _animationController.reverse();
+    _progressAnimationController.reset();
+  }
+
 // 9:50
   @override
   Widget build(BuildContext context) {
@@ -69,6 +101,7 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
       backgroundColor: Colors.black,
       body: SizedBox(
         width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
         child: !_hasPer || !_cameraController.value.isInitialized
             ? Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -82,7 +115,7 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
                     ),
                   ),
                   Gaps.v20,
-                  CircularProgressIndicator(),
+                  CircularProgressIndicator.adaptive(),
                 ],
               )
             : Stack(
@@ -132,6 +165,35 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
                           icon: const Icon(Icons.flashlight_on_rounded),
                         ),
                       ],
+                    ),
+                  ),
+                  Positioned(
+                    bottom: Sizes.size40,
+                    child: GestureDetector(
+                      onTapDown: _startRecording,
+                      onTapUp: (details) => _stopRecording,
+                      child: ScaleTransition(
+                        scale: _buttonAnimation,
+                        child: Stack(alignment: Alignment.center, children: [
+                          SizedBox(
+                            width: Sizes.size80 + Sizes.size14,
+                            height: Sizes.size80 + Sizes.size14,
+                            child: CircularProgressIndicator(
+                              strokeWidth: Sizes.size6,
+                              value: _progressAnimationController.value,
+                              color: Colors.red.shade400,
+                            ),
+                          ),
+                          Container(
+                            width: Sizes.size80,
+                            height: Sizes.size80,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.red.shade500,
+                            ),
+                          ),
+                        ]),
+                      ),
                     ),
                   )
                 ],
