@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../constants/gaps.dart';
 import '../../constants/sizes.dart';
@@ -22,12 +23,7 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
       if (_formKey.currentState!.validate()) {
         _formKey.currentState!.save();
         print(formdata);
-        Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(
-            builder: (context) => const InterestScreen(),
-          ),
-          (route) => false,
-        );
+        context.goNamed(InterestScreen.routeName);
       }
     }
     // currnstate true === call validate

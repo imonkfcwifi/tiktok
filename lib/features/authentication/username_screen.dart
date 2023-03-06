@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../constants/gaps.dart';
 import '../../constants/sizes.dart';
@@ -7,9 +6,6 @@ import 'email_screen.dart';
 import 'widgets/form_button.dart';
 
 class UsernameScreen extends StatefulWidget {
-  static const routeURL = "username";
-  // "/"안에 nested 되어있으므로 "/" 삭제
-  static const routeName = "username";
   const UsernameScreen({super.key});
 
   @override
@@ -41,9 +37,11 @@ class _UsernameScreenState extends State<UsernameScreen> {
 
   void _onNextTap() {
     if (_username.isEmpty) return;
-    context.pushNamed(
-      EmailScreen.routeName,
-      extra: EmailScreenArgs(username: _username),
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => EmailScreen(username: _username),
+      ),
     );
   }
   // StatefulWidget의 state에 있어서 build context 안해도됨

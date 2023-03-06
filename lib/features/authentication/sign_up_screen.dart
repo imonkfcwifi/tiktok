@@ -16,12 +16,13 @@ class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
 
   void _onLoginTap(BuildContext context) async {
-    context.push(LoginScreen.routeName);
+    context.pushNamed(LoginScreen.routeName);
     // context.go 는 stack 무시하고 location 으로 이동
   }
 
   void onEmailTap(BuildContext context) {
-    context.pushNamed(UsernameScreen.routeName);
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => const UsernameScreen()));
   }
 
   void onAppleTap(BuildContext context) {}

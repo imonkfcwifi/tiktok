@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:go_router/go_router.dart';
 import '../../constants/gaps.dart';
 import '../../constants/sizes.dart';
 import '../onboarding/interests_screen.dart';
@@ -39,14 +39,9 @@ class BirthdayScreenState extends State<BirthdayScreen> {
   }
 
   void _onNextTap() {
-    Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(
-        builder: (context) => const InterestScreen(),
-      ),
-      (route) => false,
-    );
+    context.pushReplacementNamed(InterestScreen.routeName);
   }
-  // StatefulWidget의 state에 있어서 build context 안해도됨
+  // pushReplacementNamed : stack 전부 제거 첫페이지로 다음을 push 함
 
 //  dispose : https://nomad-programmer.tistory.com/254
 
