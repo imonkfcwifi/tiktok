@@ -4,12 +4,12 @@ import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/features/discover/main_discover_screen.dart';
 import 'package:tiktok_clone/features/inbox/indox_screen.dart';
 import 'package:tiktok_clone/features/users/user_profile_screen.dart';
-import 'package:tiktok_clone/features/videos/video_recording_screen.dart';
 import 'package:tiktok_clone/utils.dart';
 
 import '../../../constants/gaps.dart';
 import '../../../constants/sizes.dart';
-import '../../../features/videos/video_screen.dart';
+import '../../../features/videos/views/video_recording_screen.dart';
+import '../../../features/videos/views/video_screen.dart';
 import 'widgets/nav_tab.dart';
 import 'widgets/post_video_button.dart';
 
