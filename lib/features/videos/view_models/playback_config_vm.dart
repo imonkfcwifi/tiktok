@@ -5,7 +5,8 @@ import 'package:tiktok_clone/features/videos/repos/video_playback_repo.dart';
 class PlaybackConfigViewModel extends Notifier<PlaybackConfigModel> {
   final PlaybackConfigRepository _repository;
 
-  PlaybackConfigViewModel(PlaybackConfigRepository repository);
+  PlaybackConfigViewModel(
+      PlaybackConfigRepository repository, this._repository);
 
   void setMuted(bool value) {
     _repository.setMuted(value);
@@ -41,3 +42,4 @@ final playbackConfigProvider =
 // 1. Notifier<PlaybackConfigModel> 로 data 를 expose
 // 2. PlaybackConfigModel build()로 data의 초기값 반환
 // 3. state = 를 만들어 data 수정
+// 4. Provider로 data를 원하는 곳에 배포

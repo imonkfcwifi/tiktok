@@ -1,26 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok_clone/features/videos/view_models/playback_config_vm.dart';
 
-class SettingScreen extends StatefulWidget {
+class SettingScreen extends ConsumerWidget {
   const SettingScreen({super.key});
-
+// consumerwidget is coming from riverpod
   @override
-  State<SettingScreen> createState() => _SettingScreenState();
-}
-
-class _SettingScreenState extends State<SettingScreen> {
-  bool _notifications = false;
-
-  void _onNotificationsChanged(bool? newValue) {
-    if (newValue == null) return;
-    setState(() {
-      _notifications = newValue;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    // riverpod을 사용하기 위한 WidgetRef
     return Scaffold(
         appBar: AppBar(
           title: const Text('Setting'),
@@ -29,49 +18,53 @@ class _SettingScreenState extends State<SettingScreen> {
           children: [
             SwitchListTile.adaptive(
               activeColor: Colors.black,
-              value: ,
+              value: ref.watch(playbackConfigProvider).muted,
               // 변경사항을 watch , 변하는 property의 값을 알고싶을때
-              onChanged: (value) =>
-                  ,
+              onChanged: (value) {
+                ref.read(playbackConfigProvider.notifier).setMuted(value);
+                // notifier class에 접근
+              },
               // 변경사항을 change, 주로 Method
               title: const Text("click this"),
               subtitle: const Text("hi"),
             ),
             SwitchListTile.adaptive(
               activeColor: Colors.black,
-              value: ,
+              value: ref.watch(playbackConfigProvider).autoplay,
               // 변경사항을 watch , 변하는 property의 값을 알고싶을때
-              onChanged: ,
+              onChanged: (value) {
+                ref.read(playbackConfigProvider.notifier).setAutoplay(value);
+              },
               // 변경사항을 change, 주로 Method
               title: const Text("click this"),
               subtitle: const Text("hi"),
             ),
             Switch.adaptive(
-              value: _notifications,
-              onChanged: _onNotificationsChanged,
+              value: false,
+              onChanged: (value) {},
             ),
             CupertinoSwitch(
-              value: _notifications,
-              onChanged: _onNotificationsChanged,
+              value: false,
+              onChanged: (value) {},
             ),
             SwitchListTile.adaptive(
               activeColor: Colors.black,
-              value: _notifications,
-              onChanged: _onNotificationsChanged,
+              value: false,
+              onChanged: (value) {},
               title: const Text("click this"),
               subtitle: const Text("hi"),
             ),
             Checkbox(
               activeColor: Colors.black,
               checkColor: Colors.white,
-              value: _notifications,
-              onChanged: _onNotificationsChanged,
+              value: false,
+              onChanged: (value) {},
             ),
             CheckboxListTile(
               activeColor: Colors.black,
               checkColor: Colors.white,
-              value: _notifications,
-              onChanged: _onNotificationsChanged,
+              value: false,
+              onChanged: (value) {},
               title: const Text("Enable Noti"),
             ),
             ListTile(
