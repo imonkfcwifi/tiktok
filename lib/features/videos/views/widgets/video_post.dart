@@ -1,8 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
-import 'package:tiktok_clone/features/videos/view_models/playback_config_vm.dart';
 
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
@@ -78,9 +76,6 @@ class _VideoPostState extends State<VideoPost>
       duration: _animationDuration,
     );
 
-    context
-        .read<PlaybackConfigViewModel>()
-        .addListener(_onPlaybackConfigChanged);
   }
 
   @override
@@ -92,7 +87,6 @@ class _VideoPostState extends State<VideoPost>
   void _onPlaybackConfigChanged() {
     if (!mounted) return;
     // 영상이 죽었으면 실행 X
-    final muted = context.read<PlaybackConfigViewModel>().muetd;
     if (muted) {
       _videoPlayerController.setVolume(0);
     } else {
@@ -105,7 +99,6 @@ class _VideoPostState extends State<VideoPost>
     if (info.visibleFraction == 1 &&
         !_isPaused &&
         !_videoPlayerController.value.isPlaying) {
-      final autoplay = context.read<PlaybackConfigViewModel>().autoplay;
       if (autoplay) {
         _videoPlayerController.play();
       }
@@ -190,11 +183,10 @@ class _VideoPostState extends State<VideoPost>
               top: 40,
               child: IconButton(
                 onPressed: () {
-                  context.read<PlaybackConfigViewModel>().setMuted(
-                      !context.watch<PlaybackConfigViewModel>().muetd);
+                 
                 },
                 icon: FaIcon(
-                  context.watch<PlaybackConfigViewModel>().muetd
+                  
                       ? FontAwesomeIcons.volumeOff
                       : FontAwesomeIcons.volumeHigh,
                   color: Colors.white,

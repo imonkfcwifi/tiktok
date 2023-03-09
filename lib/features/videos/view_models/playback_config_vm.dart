@@ -1,35 +1,43 @@
-import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tiktok_clone/features/videos/models/playback_config_model.dart';
 import 'package:tiktok_clone/features/videos/repos/video_playback_repo.dart';
 
-class PlaybackConfigViewModel extends ChangeNotifier {
+class PlaybackConfigViewModel extends Notifier<PlaybackConfigModel> {
   final PlaybackConfigRepository _repository;
 
-  late final PlaybackConfigModel _model = PlaybackConfigModel(
-    muted: _repository.isMuted(),
-    autoplay: _repository.isAuto(),
-  );
-
-  PlaybackConfigViewModel(this._repository);
-  bool get muetd => _model.muted;
-  // 익명성을 위해 실제 _model에 접근해서 mueted 반환
-  bool get autoplay => _model.autoplay;
+  PlaybackConfigViewModel(PlaybackConfigRepository repository);
 
   void setMuted(bool value) {
     _repository.setMuted(value);
-    // 내 repo 에서 value를 disk에 persist
-    _model.muted = value;
-    // model 수정
-    notifyListeners();
-    // listen하고 있는 모두에게 notify
+    state = PlaybackConfigModel(muted: value, autoplay: state.autoplay);
+    // 기본 state를 새 state로 대체
   }
 
   void setAutoplay(bool value) {
     _repository.setAutoplay(value);
-    // 내 repo 에서 value를 disk에 persist
-    _model.autoplay = value;
-    // model 수정
-    notifyListeners();
-    // listen하고 있는 모두에게 notify
+    state = PlaybackConfigModel(muted: state.muted, autoplay: value);
+    // 기본 state를 새 state로 대체
   }
+
+  @override
+  PlaybackConfigModel build() {
+    // build method는 화면이 보길 원하는 데이터의 초기상태를 반환해야함..
+    return PlaybackConfigModel(
+      muted: _repository.isMuted(),
+      autoplay: _repository.isAuto(),
+    );
+  }
+  // PlaybackConfigViewModel이 build되면 (처음으로 초기화 되면)
+  // PlaybackConfigModel 의 state의 data를 가지게 된다
 }
+
+final playbackConfigProvider =
+    NotifierProvider<PlaybackConfigViewModel, PlaybackConfigModel>(
+  () => throw UnimplementedError(),
+  // 특정 함수나 기능이 아직 구현되지 않았음을 나타내는 예외
+);
+// send Viewmodel data to Model
+
+// 1. Notifier<PlaybackConfigModel> 로 data 를 expose
+// 2. PlaybackConfigModel build()로 data의 초기값 반환
+// 3. state = 를 만들어 data 수정

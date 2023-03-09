@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
-import 'package:tiktok_clone/features/videos/view_models/playback_config_vm.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});
@@ -31,20 +29,19 @@ class _SettingScreenState extends State<SettingScreen> {
           children: [
             SwitchListTile.adaptive(
               activeColor: Colors.black,
-              value: context.watch<PlaybackConfigViewModel>().muetd,
+              value: ,
               // 변경사항을 watch , 변하는 property의 값을 알고싶을때
               onChanged: (value) =>
-                  context.read<PlaybackConfigViewModel>().setMuted(value),
+                  ,
               // 변경사항을 change, 주로 Method
               title: const Text("click this"),
               subtitle: const Text("hi"),
             ),
             SwitchListTile.adaptive(
               activeColor: Colors.black,
-              value: context.watch<PlaybackConfigViewModel>().autoplay,
+              value: ,
               // 변경사항을 watch , 변하는 property의 값을 알고싶을때
-              onChanged: (value) =>
-                  context.read<PlaybackConfigViewModel>().setAutoplay(value),
+              onChanged: ,
               // 변경사항을 change, 주로 Method
               title: const Text("click this"),
               subtitle: const Text("hi"),
