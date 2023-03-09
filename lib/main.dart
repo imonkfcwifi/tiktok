@@ -12,13 +12,14 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await SystemChrome.setPreferredOrientations(
-    [DeviceOrientation.portraitUp],
+    [
+      DeviceOrientation.portraitUp,
+    ],
   );
   // repository는 preferences를 넘겨줘야만 들을 수 있음
   final preferences = await SharedPreferences.getInstance();
-  // SharedPrefernces 접근
   final repository = PlaybackConfigRepository(preferences);
-  // Repository initialize
+
   runApp(
     ProviderScope(
       overrides: [

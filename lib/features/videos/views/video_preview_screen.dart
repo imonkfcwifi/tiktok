@@ -38,14 +38,12 @@ class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _initVideo();
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _videoPlayerController.dispose();
   }

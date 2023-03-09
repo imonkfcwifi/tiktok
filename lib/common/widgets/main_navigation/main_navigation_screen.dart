@@ -1,22 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tiktok_clone/features/discover/main_discover_screen.dart';
-import 'package:tiktok_clone/features/inbox/indox_screen.dart';
+import 'package:tiktok_clone/constants/gaps.dart';
+import 'package:tiktok_clone/constants/sizes.dart';
+
+import 'package:tiktok_clone/common/widgets/main_navigation/widgets/nav_tab.dart';
+import 'package:tiktok_clone/common/widgets/main_navigation/widgets/post_video_button.dart';
 import 'package:tiktok_clone/features/users/user_profile_screen.dart';
+import 'package:tiktok_clone/features/videos/views/video_recording_screen.dart';
+import 'package:tiktok_clone/features/videos/views/video_timeline_screen.dart';
 import 'package:tiktok_clone/utils.dart';
 
-import '../../../constants/gaps.dart';
-import '../../../constants/sizes.dart';
-import '../../../features/videos/views/video_recording_screen.dart';
-import '../../../features/videos/views/video_screen.dart';
-import 'widgets/nav_tab.dart';
-import 'widgets/post_video_button.dart';
+import '../../../features/discover/main_discover_screen.dart';
+import '../../../features/inbox/indox_screen.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   static const String routeName = "mainNavigation";
+
   final String tab;
-  const MainNavigationScreen({super.key, required this.tab});
+
+  const MainNavigationScreen({
+    super.key,
+    required this.tab,
+  });
 
   @override
   State<MainNavigationScreen> createState() => _MainNavigationScreenState();
@@ -26,10 +32,11 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   final List<String> _tabs = [
     "home",
     "discover",
-    "video",
+    "xxxx",
     "inbox",
-    "proile",
+    "profile",
   ];
+
   late int _selectedIndex = _tabs.indexOf(widget.tab);
 
   void _onTap(int index) {
@@ -50,47 +57,55 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
       resizeToAvoidBottomInset: false,
       backgroundColor:
           _selectedIndex == 0 || isDark ? Colors.black : Colors.white,
-      body: Stack(children: [
-        Offstage(
-          offstage: _selectedIndex != 0,
-          child: const VideoTimeLineScreen(),
-        ),
-        Offstage(
-          offstage: _selectedIndex != 1,
-          child: const DiscoverScreen(),
-        ),
-        Offstage(
-          offstage: _selectedIndex != 3,
-          child: const InboxScreen(),
-        ),
-        Offstage(
-          offstage: _selectedIndex != 4,
-          child: const UserProfileScreen(
-            username: "roh",
+      body: Stack(
+        children: [
+          Offstage(
+            offstage: _selectedIndex != 0,
+            child: const VideoTimeLineScreen(),
           ),
-        ),
-      ]),
-      bottomNavigationBar: BottomAppBar(
+          Offstage(
+            offstage: _selectedIndex != 1,
+            child: const DiscoverScreen(),
+          ),
+          Offstage(
+            offstage: _selectedIndex != 3,
+            child: const InboxScreen(),
+          ),
+          Offstage(
+            offstage: _selectedIndex != 4,
+            child: const UserProfileScreen(
+              username: "니꼬",
+              tab: "",
+            ),
+          )
+        ],
+      ),
+      bottomNavigationBar: Container(
         color: _selectedIndex == 0 || isDark ? Colors.black : Colors.white,
+        padding: const EdgeInsets.only(
+          bottom: Sizes.size32,
+        ),
         child: Padding(
-          padding: const EdgeInsets.all(Sizes.size16),
+          padding: const EdgeInsets.all(Sizes.size12),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               NavTap(
-                  icon: FontAwesomeIcons.house,
-                  selectedIcon: FontAwesomeIcons.house,
-                  isSelected: _selectedIndex == 0,
-                  text: 'Home',
-                  onTap: () => _onTap(0),
-                  selectedIndex: _selectedIndex),
+                text: "Home",
+                isSelected: _selectedIndex == 0,
+                icon: FontAwesomeIcons.house,
+                selectedIcon: FontAwesomeIcons.house,
+                onTap: () => _onTap(0),
+                selectedIndex: _selectedIndex,
+              ),
               NavTap(
-                  icon: FontAwesomeIcons.compass,
-                  selectedIcon: FontAwesomeIcons.solidCompass,
-                  isSelected: _selectedIndex == 1,
-                  text: 'Discover',
-                  onTap: () => _onTap(1),
-                  selectedIndex: _selectedIndex),
+                text: "Discover",
+                isSelected: _selectedIndex == 1,
+                icon: FontAwesomeIcons.compass,
+                selectedIcon: FontAwesomeIcons.solidCompass,
+                onTap: () => _onTap(1),
+                selectedIndex: _selectedIndex,
+              ),
               Gaps.h24,
               GestureDetector(
                 onTap: _onPostVideoButtonTap,
@@ -98,19 +113,21 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
               ),
               Gaps.h24,
               NavTap(
-                  icon: FontAwesomeIcons.message,
-                  selectedIcon: FontAwesomeIcons.solidMessage,
-                  isSelected: _selectedIndex == 3,
-                  text: 'Inbox',
-                  onTap: () => _onTap(3),
-                  selectedIndex: _selectedIndex),
+                text: "Inbox",
+                isSelected: _selectedIndex == 3,
+                icon: FontAwesomeIcons.message,
+                selectedIcon: FontAwesomeIcons.solidMessage,
+                onTap: () => _onTap(3),
+                selectedIndex: _selectedIndex,
+              ),
               NavTap(
-                  icon: FontAwesomeIcons.user,
-                  selectedIcon: FontAwesomeIcons.solidUser,
-                  isSelected: _selectedIndex == 4,
-                  text: 'Profile',
-                  onTap: () => _onTap(4),
-                  selectedIndex: _selectedIndex),
+                text: "Profile",
+                isSelected: _selectedIndex == 4,
+                icon: FontAwesomeIcons.user,
+                selectedIcon: FontAwesomeIcons.solidUser,
+                onTap: () => _onTap(4),
+                selectedIndex: _selectedIndex,
+              ),
             ],
           ),
         ),

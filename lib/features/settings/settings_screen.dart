@@ -75,10 +75,10 @@ class SettingScreen extends ConsumerWidget {
                   firstDate: DateTime(1980),
                   lastDate: DateTime(2030),
                 );
-                print(date);
+
                 final time = await showTimePicker(
                     context: context, initialTime: TimeOfDay.now());
-                print(time);
+
                 final booking = await showDateRangePicker(
                   context: context,
                   firstDate: DateTime(1980),

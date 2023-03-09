@@ -11,7 +11,7 @@ import 'features/onboarding/interests_screen.dart';
 import 'features/videos/views/video_recording_screen.dart';
 
 final router = GoRouter(
-  initialLocation: "/home",
+  initialLocation: "/inbox",
   routes: [
     GoRoute(
       name: SignUpScreen.routeName,
@@ -29,19 +29,17 @@ final router = GoRouter(
       builder: (context, state) => const InterestScreen(),
     ),
     GoRoute(
-      name: MainNavigationScreen.routeName,
       path: "/:tab(home|discover|inbox|profile)",
+      name: MainNavigationScreen.routeName,
       builder: (context, state) {
-        final tabs = state.params["tab"]!;
-        return MainNavigationScreen(tab: tabs);
+        final tab = state.params["tab"]!;
+        return MainNavigationScreen(tab: tab);
       },
     ),
     GoRoute(
       name: ActivityScreen.routeName,
       path: ActivityScreen.routeURL,
-      builder: (context, state) {
-        return const ActivityScreen();
-      },
+      builder: (context, state) => const ActivityScreen(),
     ),
     GoRoute(
       name: ChatScreen.routeName,
@@ -49,12 +47,15 @@ final router = GoRouter(
       builder: (context, state) => const ChatScreen(),
       routes: [
         GoRoute(
-            path: ChatDetailScreen.routeURL,
-            name: ChatDetailScreen.routeURL,
-            builder: (context, state) {
-              final id = state.params["id"]!;
-              return ChatDetailScreen(chatId: id);
-            })
+          name: ChatDetailScreen.routeName,
+          path: ChatDetailScreen.routeURL,
+          builder: (context, state) {
+            final chatId = state.params["chatId"]!;
+            return ChatDetailScreen(
+              chatId: chatId,
+            );
+          },
+        )
       ],
     ),
     GoRoute(
@@ -64,11 +65,16 @@ final router = GoRouter(
         transitionDuration: const Duration(milliseconds: 200),
         child: const VideoRecordingScreen(),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          final position = Tween(begin: const Offset(0, 1), end: Offset.zero)
-              .animate(animation);
-          return SlideTransition(position: position, child: child);
+          final position = Tween(
+            begin: const Offset(0, 1),
+            end: Offset.zero,
+          ).animate(animation);
+          return SlideTransition(
+            position: position,
+            child: child,
+          );
         },
       ),
-    ),
+    )
   ],
 );

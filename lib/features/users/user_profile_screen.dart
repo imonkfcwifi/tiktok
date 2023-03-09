@@ -7,8 +7,13 @@ import 'package:tiktok_clone/features/users/widgets/persistent_tab_bar.dart';
 
 class UserProfileScreen extends StatefulWidget {
   final String username;
-  final String? tab;
-  const UserProfileScreen({super.key, required this.username, this.tab});
+  final String tab;
+
+  const UserProfileScreen({
+    super.key,
+    required this.username,
+    required this.tab,
+  });
 
   @override
   State<UserProfileScreen> createState() => _UserProfileScreenState();
@@ -16,9 +21,11 @@ class UserProfileScreen extends StatefulWidget {
 
 class _UserProfileScreenState extends State<UserProfileScreen> {
   void _onGearPressed() {
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => const SettingScreen(),
-    ));
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const SettingScreen(),
+      ),
+    );
   }
 
   @override
@@ -27,6 +34,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
       backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
       body: SafeArea(
         child: DefaultTabController(
+          initialIndex: widget.tab == "likes" ? 1 : 0,
           length: 2,
           child: NestedScrollView(
             headerSliverBuilder: (context, innerBoxIsScrolled) {
@@ -51,7 +59,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         radius: 50,
                         foregroundImage: NetworkImage(
                             "https://avatars.githubusercontent.com/u/3612017"),
-                        child: Text("imonkfcwifi"),
+                        child: Text("니꼬"),
                       ),
                       Gaps.v20,
                       Row(
@@ -210,13 +218,12 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             body: TabBarView(
               children: [
                 GridView.builder(
-                  padding: EdgeInsets.zero,
-                  physics: const NeverScrollableScrollPhysics(),
                   itemCount: 20,
+                  padding: EdgeInsets.zero,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3,
-                    crossAxisSpacing: Sizes.size3,
-                    mainAxisSpacing: Sizes.size3,
+                    crossAxisSpacing: Sizes.size2,
+                    mainAxisSpacing: Sizes.size2,
                     childAspectRatio: 9 / 14,
                   ),
                   itemBuilder: (context, index) => Column(

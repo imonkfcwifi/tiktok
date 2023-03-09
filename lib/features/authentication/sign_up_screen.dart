@@ -36,7 +36,7 @@ class SignUpScreen extends StatelessWidget {
             body: Center(child: Text("Please Rotate your phone")),
           );
         } */
-        print(orientation);
+
         return Scaffold(
           body: SafeArea(
             child: Padding(

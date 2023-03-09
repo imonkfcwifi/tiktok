@@ -6,7 +6,8 @@ class PlaybackConfigViewModel extends Notifier<PlaybackConfigModel> {
   final PlaybackConfigRepository _repository;
 
   PlaybackConfigViewModel(
-      PlaybackConfigRepository repository, this._repository);
+    this._repository,
+  );
 
   void setMuted(bool value) {
     _repository.setMuted(value);

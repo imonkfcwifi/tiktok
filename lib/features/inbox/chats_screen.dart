@@ -44,7 +44,10 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   void _onChatTap(int index) {
-    context.pushNamed(ChatDetailScreen.routeName, params: {"chatId": "$index"});
+    context.pushNamed(
+      ChatDetailScreen.routeName,
+      params: {"chatId": "$index"},
+    );
   }
 
   Widget _makeTile(int index) {
