@@ -2,21 +2,23 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gallery_saver/gallery_saver.dart';
+import 'package:tiktok_clone/features/videos/view_models/timeline_view_model.dart';
 import 'package:video_player/video_player.dart';
 
-class VideoPreviewScreen extends StatefulWidget {
+class VideoPreviewScreen extends ConsumerStatefulWidget {
   final XFile video;
   final bool isPicked;
   const VideoPreviewScreen(
       {super.key, required this.video, required this.isPicked});
 
   @override
-  State<VideoPreviewScreen> createState() => _VideoPreviewScreenState();
+  VideoPreviewScreenState createState() => VideoPreviewScreenState();
 }
 
-class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
+class VideoPreviewScreenState extends ConsumerState<VideoPreviewScreen> {
   bool _savedVideo = false;
   late final VideoPlayerController _videoPlayerController;
   Future<void> _initVideo() async {
@@ -48,6 +50,10 @@ class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
     _videoPlayerController.dispose();
   }
 
+  void _onUploadPressed() {
+    ref.read(timeLineProvider.notifier).uploadVideo();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,7 +66,14 @@ class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
               icon: FaIcon(_savedVideo
                   ? FontAwesomeIcons.check
                   : FontAwesomeIcons.download),
-            )
+            ),
+          IconButton(
+              onPressed: ref.watch(timeLineProvider).isLoading
+                  ? () {}
+                  : _onUploadPressed,
+              icon: ref.watch(timeLineProvider).isLoading
+                  ? const CircularProgressIndicator()
+                  : const FaIcon(FontAwesomeIcons.cloudArrowUp))
         ],
       ),
       body: _videoPlayerController.value.isInitialized
