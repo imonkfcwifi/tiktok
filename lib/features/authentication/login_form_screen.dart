@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tiktok_clone/features/authentication/view_models/login_view_model.dart';
 
 import '../../constants/gaps.dart';
 import '../../constants/sizes.dart';
-import '../onboarding/interests_screen.dart';
 import 'widgets/form_button.dart';
 
-class LoginFormScreen extends StatefulWidget {
+class LoginFormScreen extends ConsumerStatefulWidget {
   const LoginFormScreen({super.key});
 
   @override
-  State<LoginFormScreen> createState() => _LoginFormScreenState();
+  ConsumerState<LoginFormScreen> createState() => _LoginFormScreenState();
 }
 
-class _LoginFormScreenState extends State<LoginFormScreen> {
+class _LoginFormScreenState extends ConsumerState<LoginFormScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   Map<String, String> formdata = {};
@@ -22,8 +22,10 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
     if (_formKey.currentState != null) {
       if (_formKey.currentState!.validate()) {
         _formKey.currentState!.save();
-        print(formdata);
-        context.goNamed(InterestScreen.routeName);
+        ref
+            .read(loginProvider.notifier)
+            .login(formdata["email"]!, formdata["password"]!, context);
+        // context.goNamed(InterestScreen.routeName);
       }
     }
     // currnstate true === call validate
@@ -78,8 +80,10 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
               Gaps.v28,
               GestureDetector(
                 onTap: _onSubmitTap,
-                child: const FormButton(
-                  disabled: false,
+                child: FormButton(
+                  disabled: ref.watch(loginProvider).isLoading,
+                  // 값을 실제로 화면에서 볼때 watch
+                  // read는 notifier가 사용하거나 한번만 읽을때
                   text: 'hi',
                 ),
               )

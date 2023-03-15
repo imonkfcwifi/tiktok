@@ -39,7 +39,7 @@ class BirthdayScreenState extends ConsumerState<BirthdayScreen> {
   }
 
   void _onNextTap() {
-    ref.read(signUpProvider.notifier).signUp();
+    ref.read(signUpProvider.notifier).signUp(context);
   }
   // pushReplacementNamed : stack 전부 제거 첫페이지로 다음을 push 함
 
