@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
+import 'package:tiktok_clone/features/authentication/repos/authentication_repo.dart';
 import 'package:tiktok_clone/features/videos/view_models/playback_config_vm.dart';
 
 class SettingScreen extends ConsumerWidget {
@@ -151,22 +153,25 @@ class SettingScreen extends ConsumerWidget {
                 }),
             ListTile(
                 title: const Text(
-                  "data (ios. buttom) ",
+                  "Log Out",
                 ),
                 textColor: Colors.red,
                 onTap: () {
                   showCupertinoModalPopup(
                     context: context,
                     builder: (context) => CupertinoActionSheet(
-                      message: const Text("data2"),
-                      title: const Text("data"),
+                      message: const Text("Are you sure?"),
+                      title: const Text("good bye!"),
                       actions: [
                         CupertinoActionSheetAction(
                             onPressed: () => Navigator.of(context).pop(),
-                            child: const Text("Not Log Out")),
+                            child: const Text("No")),
                         CupertinoActionSheetAction(
                             isDestructiveAction: true,
-                            onPressed: () => Navigator.of(context).pop(),
+                            onPressed: () {
+                              ref.read(authRepo).signOut();
+                              context.go("/");
+                            },
                             child: const Text("yes"))
                       ],
                     ),

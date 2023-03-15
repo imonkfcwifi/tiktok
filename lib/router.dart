@@ -13,6 +13,8 @@ import 'features/onboarding/interests_screen.dart';
 import 'features/videos/views/video_recording_screen.dart';
 
 final routerProvider = Provider((ref) {
+  // ref.watch(authStateStream);
+  // authstate 가 바뀌고 state가 변경되면 rebuil 되고 자동으로 rediret 됨
   return GoRouter(
     initialLocation: "/home",
     redirect: (context, state) {
