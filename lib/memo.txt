@@ -15,3 +15,5 @@ Dart와 Flutter에서 async-await는 비동기 처리를 간편하게 구현할 
 위와 같이 비동기 작업을 수행할 때 async-await을 사용하면 코드를 더 간결하게 만들 수 있으며, 애플리케이션의 반응성을 향상시킬 수 있습니다. 그러나 작은 규모의 작업에 대해서는 async-await을 사용할 필요가 없으므로 상황에 따라 적절한 방법을 선택해야 합니다.
 
 firebass 플러그인을 추가하거나 제거할때마다 flutterfire configure를 실행해야 함
+
+Class AsyncNotifier 만들고 method를 expose 한다
