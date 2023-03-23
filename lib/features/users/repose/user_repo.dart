@@ -8,7 +8,12 @@ import '../models/user_profile_model.dart';
 //  update profile , update bio <- challenge
 class UserRepository {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
-  Future<void> createProfile(UserProfileModel user) async {}
+  Future<void> createProfile(UserProfileModel userProfile) async {
+    await _db
+        .collection("users")
+        .doc(userProfile.uid)
+        .set(userProfile.toJson());
+  }
 }
 
 final userRepo = Provider((ref) => UserRepository());
