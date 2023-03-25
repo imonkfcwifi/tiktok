@@ -25,6 +25,7 @@ class UsersViewModel extends AsyncNotifier<UserProfileModel> {
 
 // sign up 시 firestore에도 계정 저장
   Future<void> createAccount(UserCredential credential) async {
+    await Future.delayed(const Duration(seconds: 10));
     if (credential.user == null) {
       throw Exception("no");
     }
