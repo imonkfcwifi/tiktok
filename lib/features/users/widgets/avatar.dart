@@ -7,10 +7,14 @@ import 'package:tiktok_clone/features/users/view_models/avatar_view_model.dart';
 
 class Avatar extends ConsumerWidget {
   final String name;
+  final bool hasAvatar;
+  final String uid;
 
   const Avatar({
     super.key,
     required this.name,
+    required this.hasAvatar,
+    required this.uid,
   });
 
   Future<void> _onAvatarTap(WidgetRef ref) async {
@@ -43,8 +47,10 @@ class Avatar extends ConsumerWidget {
             )
           : CircleAvatar(
               radius: 50,
-              foregroundImage: const NetworkImage(
-                  "https://avatars.githubusercontent.com/u/3612017"),
+              foregroundImage: hasAvatar
+                  ? NetworkImage(
+                      "https://firebasestorage.googleapis.com/v0/b/tiktok-abc-xyz.appspot.com/o/avatars%2F$uid?alt=media")
+                  : null,
               child: Text(name),
             ),
     );
