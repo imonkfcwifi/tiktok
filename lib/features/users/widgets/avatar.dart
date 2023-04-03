@@ -48,8 +48,8 @@ class Avatar extends ConsumerWidget {
           : CircleAvatar(
               radius: 50,
               foregroundImage: hasAvatar
-                  ? NetworkImage(
-                      "https://firebasestorage.googleapis.com/v0/b/imonkfcwifirnfmaehdtks.appspot.com/o/avatars%2F$uid?alt=media&haha=${DateTime.now().toString()}")
+                  ? const NetworkImage(
+                      "https://firebasestorage.googleapis.com/v0/b/imonkfcwifirnfmaehdtks.appspot.com/o/avatars%2FADilKAkze9bhsPSzy8VYQoN27792?alt=media&token=af6279f4-8fa5-4183-a0df-71adac066111")
                   : null,
               child: Text(name),
             ),
