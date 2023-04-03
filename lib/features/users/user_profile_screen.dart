@@ -33,7 +33,7 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ref.watch(usersProvier).when(
+    return ref.watch(usersProvider).when(
           data: (data) => Scaffold(
             backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
             body: SafeArea(

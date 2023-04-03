@@ -5,13 +5,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/video_model.dart';
 
 class TimelineViewModel extends AsyncNotifier<List<VideoModel>> {
-  List<VideoModel> _list = [VideoModel(title: "First Video")];
+  List<VideoModel> _list = [];
 
   void uploadVideo() async {
     state = const AsyncValue.loading();
     await Future.delayed(const Duration(seconds: 5));
-    final newVideo = VideoModel(title: "${DateTime.now()}");
-    _list = [..._list, newVideo];
+
+    _list = [
+      ..._list,
+    ];
     // ...list 기존에 리스트에 있던거 전부 가져오기
     state = AsyncValue.data(_list);
     // AsyncNotifier 에 있기 때문에
