@@ -19,9 +19,23 @@ export const onVideoCreated = functions.firestore
       `/tmp/${snapshot.id}.jpg`,
     ]);
     const storage = admin.storage();
-    await storage.bucket().upload(`/tmp/${snapshot.id}.jpg`, {
+    const [file, _] = await storage.bucket().upload(`/tmp/${snapshot.id}.jpg`, {
       destination: `thumbnails/${snapshot.id}.jpg`,
     });
+    await file.makePublic();
+    await snapshot.ref.update({ thumbnailUrl: file.publicUrl() });
+    // ffmpeg로 추출한 Url을 영상에 넣어준다
+    const db = admin.firestore();
+
+    await db
+      .collection("users")
+      .doc(video.creatorUid)
+      .collection("videos")
+      .doc(snapshot.id)
+      .set({
+        humbnailUrl: file.publicUrl(),
+        videoId: snapshot.id,
+      });
   });
 // 중괄호를 쓰면 변수처럼 작동
 //  배포 firebase deploy --only functions
